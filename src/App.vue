@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-light bg-warning">
+    <nav class="navbar navbar-expand navbar-light bg-light mb-2">
       <a href class="navbar-brand" @click.prevent>RentCollect</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -18,7 +18,7 @@
           <router-link to="/properties" class="nav-link">All Properties</router-link>
         </li>
         <li v-if="showIfAdmin" class="nav-item">
-          <router-link to="/createproperty" class="nav-link">Create Property</router-link>
+          <router-link to="/createproperty/c" class="nav-link">Create Property</router-link>
         </li>
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
