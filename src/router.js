@@ -61,6 +61,12 @@ export const router = new Router({
       name: 'user',
       // lazy-loaded
       component: () => import('./views/BoardUser.vue')
+    },
+    {
+      path: '/propertyDetail/:propId',
+      name: 'PropertyDetail',
+      // lazy-loaded
+      component: () => import('./views/property/PropertyDetail.vue')
     }
   ]
 });

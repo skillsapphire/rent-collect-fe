@@ -55,6 +55,7 @@ export default {
     };
   },
   mounted(){
+      this.property = new PropertyModel('', '');
       let propId = this.$route.params.propId;
       if(propId != 'c'){
           PropService.getProperty(this.$store.state.auth.user.id, propId).then(
