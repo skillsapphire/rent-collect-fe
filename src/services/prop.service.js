@@ -30,11 +30,16 @@ class PropService {
     return axios.delete(API_URL + 'user/'+userId+ '/property/'+ propertyId, { headers: authHeader() });
   }
   rentProperty(propertyId,rent) {
-    debugger;
-    
+     
       return axios.post(API_URL + 'rent/'+ propertyId, rent, { headers: authHeader() });
   
   }
+
+  getRentDetail(userId) {
+    debugger;     
+    return axios.get(API_URL + 'rent/'+ userId,{ headers: authHeader() });
+
+}
 
 }
 

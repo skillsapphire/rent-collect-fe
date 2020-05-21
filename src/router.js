@@ -73,6 +73,12 @@ export const router = new Router({
       name: 'RentProperty',
       // lazy-loaded
       component: () => import('./views/property/RentProperty.vue')
+    },
+    {
+      path: '/tenantRentDetail',
+      name: 'TenantRentDetail',
+      // lazy-loaded
+      component: () => import('./views/property/TenantRentDetails.vue')
     }
   ]
 });
