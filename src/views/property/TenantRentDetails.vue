@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-     <table class="table table-striped">
+     <table v-if = 'rentDetail.username' class="table table-striped">
     <thead>
       <tr>
         <th>User Name</th>
@@ -20,6 +20,7 @@
       </tr>
     </tbody>
   </table>
+  <div v-if = 'message'>{{message}}</div>
   </div>
 </template>
 <script>
@@ -28,7 +29,8 @@ export default {
   name: 'TenantRentDetail',
   data() {
     return {
-      rentDetail: {}
+      rentDetail: {},
+      message:''
     };
   },
   mounted(){

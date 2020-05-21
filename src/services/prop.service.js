@@ -36,7 +36,6 @@ class PropService {
   }
 
   getRentDetail(userId) {
-    debugger;     
     return axios.get(API_URL + 'rent/'+ userId,{ headers: authHeader() });
 
 }
