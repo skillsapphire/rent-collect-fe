@@ -29,7 +29,12 @@ class PropService {
   deleteProperty(userId, propertyId) {
     return axios.delete(API_URL + 'user/'+userId+ '/property/'+ propertyId, { headers: authHeader() });
   }
+  rentProperty(propertyId,rent) {
+    debugger;
+    
+      return axios.post(API_URL + 'rent/'+ propertyId, rent, { headers: authHeader() });
   
+  }
 
 }
 
