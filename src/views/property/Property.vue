@@ -10,7 +10,7 @@
     </div>
     <div v-if="properties.length == 0" class="alert alert-info">
       No properties found, please
-      <router-link to="/createproperty">create property</router-link>
+      <router-link to="/createproperty/c">create property</router-link>
     </div>
     <div class="row">
       <div class="col-12" v-for="property in properties" :key="property.id">
