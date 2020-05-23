@@ -17,6 +17,7 @@
         <td>{{rentDetail.propertyName}}</td>
         <td>{{rentDetail.propertyDesc}}</td>
         <td>{{rentDetail.rentAmount}}</td>
+        <td>{{}}</td>
       </tr>
     </tbody>
   </table>
