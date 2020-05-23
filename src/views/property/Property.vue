@@ -15,15 +15,17 @@
     <div class="row">
       <div class="col-12" v-for="property in properties" :key="property.id">
         <div class="card shadow">
-          <div class="card-body">
+          <div class="card-body col-lg-6">
             <h4 class="card-title">{{property.name}}</h4>
             <p class="card-text">{{property.description}}</p>
             <a href="#" @click="propertyDetail(property.id)" class="card-link">Detail</a>
             <a href="#" @click="editProperty(property)" class="card-link">Edit</a>
             <a href="#" @click="deleteProperty(property.id)" class="card-link">Delete</a>
           </div>
+          <div class="col-lg-6"><a href="#" @click="rentProperty(property.id)">Rent this property</a></div>
         </div>
       </div>
+      
     </div>
     <div class="container text-center">
       <span v-show="loading" class="spinner-grow spinner-grow-lg text-info"></span>
@@ -83,6 +85,9 @@ export default {
     },
     propertyDetail(propertyId) {
       this.$router.push('/propertyDetail/' + propertyId);
+    },
+     rentProperty(propertyId) {
+      this.$router.push('/rent/' + propertyId);
     }
   },
   mounted() {
