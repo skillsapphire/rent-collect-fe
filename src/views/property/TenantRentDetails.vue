@@ -16,8 +16,7 @@
         <td>{{rentDetail.startDate}}</td>
         <td>{{rentDetail.propertyName}}</td>
         <td>{{rentDetail.propertyDesc}}</td>
-        <td>{{rentDetail.rentAmount}}</td>
-        <td>{{}}</td>
+        <td>{{rentDetail.rentAmount}} &nbsp; <a href="https://test.instamojo.com/@laaptulaaptu1/" target="_blank">Pay now</a></td>
       </tr>
     </tbody>
   </table>
