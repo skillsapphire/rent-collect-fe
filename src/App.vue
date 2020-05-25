@@ -49,6 +49,11 @@
           </router-link>
         </li>
         <li class="nav-item">
+          <router-link to="/credentialReset" class="nav-link">
+            Reset password
+          </router-link>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href @click.prevent="logOut">
             <font-awesome-icon icon="sign-out-alt" />LogOut
           </a>

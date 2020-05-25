@@ -4,14 +4,13 @@
       v-if="totalPropertiesCount != 0"
       class="display-4"
     >Total properties: {{totalPropertiesCount}}</span>
-    <div v-if="message" class="alert alert-danger alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>{{message}}</strong>
+    <div v-if="message">
+      <div v-if="properties.length == 0" class="alert alert-info">
+        No properties found, please
+        <router-link to="/createproperty">create property</router-link>
+      </div>
     </div>
-    <div v-if="properties.length == 0" class="alert alert-info">
-      No properties found, please
-      <router-link to="/createproperty">create property</router-link>
-    </div>
+
     <div class="row">
       <div class="col-12" v-for="property in properties" :key="property.id">
         <div class="card shadow">
@@ -22,14 +21,36 @@
             <a href="#" @click="editProperty(property)" class="card-link">Edit</a>
             <a href="#" @click="deleteProperty(property.id)" class="card-link">Delete</a>
           </div>
-          <div class="col-lg-6"><a href="#" @click="rentProperty(property.id)">Rent this property</a></div>
+          <div class="col-lg-6">
+            <button
+              class="btn btn-info"
+              :disabled="property.rented"
+              @click="rentProperty(property.id)"
+            >Rent this property</button>
+          </div>
         </div>
       </div>
-      
     </div>
+    
     <div class="container text-center">
+      <div v-if="!message">Fetching Properties Detail</div>
       <span v-show="loading" class="spinner-grow spinner-grow-lg text-info"></span>
     </div>
+
+    <nav>
+      <ul class="pagination">
+        <li class="page-item" :class="currentPage==0 ? 'disabled': ''">
+          <a class="page-link" href="#" @click="getAllProperties(currentPage-1)">Previous</a>
+        </li>
+        <li class="page-item" :class="currentPage == (page-1) ? 'active': ''" v-for="page in noOfPages" :key="page">
+          <a class="page-link" href="#" @click="getAllProperties(page-1)">{{page}}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" :class="isLastPage ? 'disabled': ''" 
+          @click="getAllProperties(currentPage+1)">Next</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -44,18 +65,31 @@ export default {
       totalPropertiesCount: 0,
       totalPages: 0,
       loading: false,
-      message: ''
+      message: '',
+      noOfPages: 0,
+      currentPage: 0,
+      isLastPage: false
     };
   },
 
   methods: {
-    getAllProperties() {
+    isDisabled() {
+      return this.property.rented;
+    },
+    getAllProperties(pageNo) {
+      this.currentPage = pageNo;
+      if(pageNo < this.noOfPages){
+        this.isLastPage = true;
+      }else{
+        this.isLastPage = false;
+      }
       this.loading = true;
-      PropService.getAllProperties(this.$store.state.auth.user.id).then(
+      PropService.getAllProperties(this.$store.state.auth.user.id, pageNo).then(
         response => {
           this.properties = response.data.content;
           this.totalPages = response.data.totalPages;
           this.totalPropertiesCount = response.data.numberOfElements;
+          this.noOfPages = Math.ceil(response.data.totalElements / response.data.pageable.pageSize);
           this.loading = false;
         },
         error => {
@@ -71,7 +105,7 @@ export default {
         propertyId
       ).then(
         response => {
-          this.getAllProperties();
+          this.getAllProperties(0);
           this.loading = false;
         },
         error => {
@@ -86,12 +120,16 @@ export default {
     propertyDetail(propertyId) {
       this.$router.push('/propertyDetail/' + propertyId);
     },
-     rentProperty(propertyId) {
+    rentProperty(propertyId) {
       this.$router.push('/rent/' + propertyId);
     }
   },
   mounted() {
-    this.getAllProperties();
+    if (!this.$store.state.auth.user) {
+      this.$router.push('/login');
+    }
+    this.isActive = true;
+    this.getAllProperties(0);
   }
 };
 </script>

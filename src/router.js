@@ -79,6 +79,12 @@ export const router = new Router({
       name: 'TenantRentDetail',
       // lazy-loaded
       component: () => import('./views/property/TenantRentDetails.vue')
+    },
+    {
+      path: '/credentialReset',
+      name: 'CredentialReset',
+      // lazy-loaded
+      component: () => import('./views/CredentialReset.vue')
     }
   ]
 });

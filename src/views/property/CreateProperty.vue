@@ -34,6 +34,9 @@
         <button class="btn btn-danger" @click="resetForm">Reset</button>
       </div>
     </form>
+     <div class="container text-center mt-2">
+      <span v-show="loading" class="spinner-grow spinner-grow-lg text-info"></span>
+    </div>
     <div
       v-if="message"
       class="alert mt-2"
@@ -51,10 +54,15 @@ export default {
       property: new PropertyModel('', ''),
       message: '',
       successful: true,
-      submitted: false
+      submitted: false,
+      loading: false,
     };
   },
+  
   mounted(){
+    if (!this.$store.state.auth.user) {
+      this.$router.push('/login');
+    }
       this.property = new PropertyModel('', '');
       let propId = this.$route.params.propId;
       if(propId != 'c'){
@@ -71,17 +79,20 @@ export default {
       },
     createEditProperty(e) {
       e.preventDefault();
+        this.loading = true;
       this.submitted = true;
       this.$validator.validate().then(isValid => {
           if(isValid){
             let userId = this.$store.state.auth.user.id;
             PropService.createEditProperty(userId, this.property).then(
                 response => {
-                this.message = 'Operation successfully';
+                this.message = 'Property added successfully';
+                  this.loading = false;
                 },
                 error => {
-                this.message = 'Error occured please try again';
+                this.message = 'Error occured while adding property,please try again';
                 this.successful = false;
+                this.loading = false;
                 }
             );
           }
