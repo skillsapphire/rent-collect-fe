@@ -47,9 +47,8 @@
         <li class="page-item" :class="currentPage == (page-1) ? 'active': ''" v-for="page in noOfPages" :key="page">
           <a class="page-link" href="#" @click="getAllProperties(page-1)">{{page}}</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" href="#" :class="isLastPage ? 'disabled': ''" 
-          @click="getAllProperties(currentPage+1)">Next</a>
+        <li class="page-item"  :class="isLastPage ? 'disabled': ''">
+          <a class="page-link" href="#" @click="getAllProperties(currentPage+1)">Next</a>
         </li>
       </ul>
     </nav>
@@ -80,12 +79,13 @@ export default {
     },
     getAllProperties(pageNo) {
       this.currentPage = pageNo;
-      if(pageNo < this.noOfPages){
+      if(pageNo != 0 && pageNo > this.noOfPages-2){
         this.isLastPage = true;
       }else{
         this.isLastPage = false;
       }
       this.loading = true;
+      //debugger;
       PropService.getAllProperties(this.$store.state.auth.user.id, pageNo).then(
         response => {
           this.properties = response.data.content;
@@ -130,7 +130,6 @@ export default {
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-    this.isActive = true;
     this.getAllProperties(0);
   }
 };
