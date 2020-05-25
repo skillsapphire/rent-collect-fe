@@ -4,11 +4,13 @@
       v-if="totalPropertiesCount != 0"
       class="display-4"
     >Total properties: {{totalPropertiesCount}}</span>
-    <div v-if="message">
-      <div v-if="properties.length == 0" class="alert alert-info">
-        No properties found, please
-        <router-link to="/createproperty">create property</router-link>
-      </div>
+    <div v-if="message" class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>{{message}}</strong>
+    </div>
+    <div v-if="properties.length == 0" class="alert alert-info">
+      No properties found, please
+      <router-link to="/createproperty/c">create property</router-link>
     </div>
 
     <div class="row">
