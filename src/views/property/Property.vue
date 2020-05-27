@@ -3,7 +3,24 @@
     <span
       v-if="totalPropertiesCount != 0"
       class="display-4"
-    >Total properties: {{totalPropertiesCount}}</span>
+    >Total properties: {{totalPropertiesCount}}</span> 
+    <div class="d-flex mt-5">
+      <label for="attribute">Filter By</label>
+      <div class="form-group ml-2">
+        <select id="attribute" class="form-control" v-model="selectedField" v-on:change="filterProperty()">
+          <option v-bind:value = "selectedItem.empId" v-for="selectedItem in selectedFieldList" :key="selectedItem.empId">
+            {{selectedItem.empValue}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group ml-2">
+        <select id="order" class="form-control" v-model="selectedOrder" v-on:change="filterProperty()">
+          <option v-bind:value = "selectedOrderItem" v-for="selectedOrderItem in selectedOrderList" :key="selectedOrderItem">
+            {{selectedOrderItem}}
+          </option>
+        </select>
+      </div>
+    </div>
     <div v-if="message" class="alert alert-danger alert-dismissible">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <strong>{{message}}</strong>
@@ -33,22 +50,27 @@
         </div>
       </div>
     </div>
-    
+
     <div class="container text-center">
       <div v-if="!message">Fetching Properties Detail</div>
       <span v-show="loading" class="spinner-grow spinner-grow-lg text-info"></span>
     </div>
-
     <nav>
       <ul class="pagination">
         <li class="page-item" :class="currentPage==0 ? 'disabled': ''">
-          <a class="page-link" href="#" @click="getAllProperties(currentPage-1)">Previous</a>
+          <a class="page-link" href="#" @click="getAllProperties(currentPage-1, selectedField, selectedOrder)">Previous</a>
         </li>
-        <li class="page-item" :class="currentPage == (page-1) ? 'active': ''" v-for="page in noOfPages" :key="page">
-          <a class="page-link" href="#" @click="getAllProperties(page-1)">{{page}}</a>
+        <li
+          class="page-item"
+          :class="currentPage == (page-1) ? 'active': ''"
+          v-for="page in totalPages"
+          :key="page"
+        >
+          <!--currentPage={{currentPage}} ::page-1= {{page-1}}::{{currentPage == (page-1)}}-->
+          <a class="page-link" href="#" @click="getAllProperties(page-1, selectedField, selectedOrder)">{{page}}</a>
         </li>
-        <li class="page-item"  :class="isLastPage ? 'disabled': ''">
-          <a class="page-link" href="#" @click="getAllProperties(currentPage+1)">Next</a>
+        <li class="page-item" :class="currentPage<totalPages-1 ? '': 'disabled'">
+          <a class="page-link" href="#" @click="getAllProperties(currentPage+1, selectedField, selectedOrder)">Next</a>
         </li>
       </ul>
     </nav>
@@ -67,31 +89,37 @@ export default {
       totalPages: 0,
       loading: false,
       message: '',
-      noOfPages: 0,
       currentPage: 0,
-      isLastPage: false
+      selectedField:'',
+      selectedFieldList: [
+          {'empId':'createdAt', 'empValue':'Created date'},
+          {'empId':'name', 'empValue':'Property title'},
+        ],
+      selectedOrder: '',
+      selectedOrderList: ['Asc', 'Desc']
     };
   },
 
   methods: {
+    filterProperty(){
+      this.getAllProperties(this.currentPage, this.selectedField, this.selectedOrder);
+    },
     isDisabled() {
       return this.property.rented;
     },
-    getAllProperties(pageNo) {
+    getAllProperties(pageNo, selectedField, selectedOrder) {
       this.currentPage = pageNo;
-      if(pageNo != 0 && pageNo > this.noOfPages-2){
+      if (pageNo != 0 && pageNo > this.totalPages - 2) {
         this.isLastPage = true;
-      }else{
+      } else {
         this.isLastPage = false;
       }
       this.loading = true;
-      //debugger;
-      PropService.getAllProperties(this.$store.state.auth.user.id, pageNo).then(
+      PropService.getAllProperties(this.$store.state.auth.user.id, pageNo, selectedField, selectedOrder).then(
         response => {
           this.properties = response.data.content;
           this.totalPages = response.data.totalPages;
           this.totalPropertiesCount = response.data.numberOfElements;
-          this.noOfPages = Math.ceil(response.data.totalElements / response.data.pageable.pageSize);
           this.loading = false;
         },
         error => {
@@ -127,10 +155,12 @@ export default {
     }
   },
   mounted() {
+    this.selectedOrder = this.selectedOrderList[0];
+    this.selectedField = this.selectedFieldList[0]['empId'];
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-    this.getAllProperties(0);
+    this.getAllProperties(0, this.selectedField, this.selectedOrder);
   }
 };
 </script>

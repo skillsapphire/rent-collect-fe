@@ -13,8 +13,8 @@ class PropService {
   getPropertyData(){
     return this.property;
   }
-  getAllProperties(userId, pageNo) {
-    return axios.get(API_URL + 'property/'+userId+'?page='+pageNo, { headers: authHeader() });
+  getAllProperties(userId, pageNo, sortField, sortType) {
+    return axios.get(API_URL + 'property/'+userId+'?page='+pageNo+'&sortField='+sortField+'&sortType='+sortType, { headers: authHeader() });
   }
   getProperty(userId, propertyId) {
     return axios.get(API_URL + 'user/'+userId+ '/property/'+ propertyId, { headers: authHeader() });
