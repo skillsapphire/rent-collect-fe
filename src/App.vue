@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
-    <nav class="navbar navbar-expand navbar-light bg-warning">
+  <div id="app" >
+    <nav class="navbar navbar-expand navbar-light bg-light mb-2">
       <a href class="navbar-brand" @click.prevent>RentCollect</a>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
+      <div class="navbar-nav mr-auto bg bg-warning ">
+        <li class="nav-item text-success">
           <router-link to="/home" class="nav-link">
             <font-awesome-icon icon="home" />Home
           </router-link>
@@ -18,10 +18,13 @@
           <router-link to="/properties" class="nav-link">All Properties</router-link>
         </li>
         <li v-if="showIfAdmin" class="nav-item">
-          <router-link to="/createproperty" class="nav-link">Create Property</router-link>
+          <router-link to="/createproperty/c" class="nav-link">Create Property</router-link>
         </li>
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
+        </li>
+        <li class="nav-item" v-if="!showIfAdmin && !showIfModerator">
+          <router-link v-if="currentUser" to="/tenantRentDetail" class="nav-link">RentDetails</router-link>
         </li>
       </div>
 
@@ -43,6 +46,11 @@
           <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
             {{ currentUser.username }}
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/credentialReset" class="nav-link">
+            Reset password
           </router-link>
         </li>
         <li class="nav-item">

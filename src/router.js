@@ -33,6 +33,18 @@ export const router = new Router({
       component: () => import('./views/Profile.vue')
     },
     {
+      path: '/properties',
+      name: 'Property',
+       // lazy-loaded
+       component: () => import('./views/property/Property.vue')
+    },
+    {
+      path: '/createproperty/:propId',
+      name: 'CreateProperty',
+       // lazy-loaded
+       component: () => import('./views/property/CreateProperty.vue')
+    },
+    {
       path: '/admin',
       name: 'admin',
       // lazy-loaded
@@ -49,6 +61,30 @@ export const router = new Router({
       name: 'user',
       // lazy-loaded
       component: () => import('./views/BoardUser.vue')
+    },
+    {
+      path: '/propertyDetail/:propId',
+      name: 'PropertyDetail',
+      // lazy-loaded
+      component: () => import('./views/property/PropertyDetail.vue')
+    },
+    {
+      path: '/rent/:propId',
+      name: 'RentProperty',
+      // lazy-loaded
+      component: () => import('./views/property/RentProperty.vue')
+    },
+    {
+      path: '/tenantRentDetail',
+      name: 'TenantRentDetail',
+      // lazy-loaded
+      component: () => import('./views/property/TenantRentDetails.vue')
+    },
+    {
+      path: '/credentialReset',
+      name: 'CredentialReset',
+      // lazy-loaded
+      component: () => import('./views/CredentialReset.vue')
     }
   ]
 });
