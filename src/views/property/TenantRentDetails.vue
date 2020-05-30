@@ -75,8 +75,7 @@ export default {
   },
   methods: {
     emailOwner() {
-      debugger;
-      PropService.emailOwner(this.rentDetail).then(
+        PropService.emailOwner(this.rentDetail).then(
         response => {
           this.emailStatus = response.data;
         },

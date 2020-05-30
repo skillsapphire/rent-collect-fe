@@ -141,7 +141,6 @@ export default {
       return this.property.rented;
     },
     getAllProperties(pageNo, selectedField, selectedOrder) {
-      debugger;
       this.currentPage = pageNo;
       if (pageNo != 0 && pageNo > this.totalPages - 2) {
         this.isLastPage = true;
@@ -159,7 +158,8 @@ export default {
           this.loading = false;
           this.properties = response.data.content;
           this.totalPages = response.data.totalPages;
-          this.totalPropertiesCount = response.data.numberOfElements;
+          this.totalPropertiesCount = response.data.totalElements;
+          console.log(response);
         },
         error => {
           this.message = 'Error occured, please try again later';
