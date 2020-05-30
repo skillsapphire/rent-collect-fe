@@ -83,9 +83,13 @@ export default {
         }
 
         if (this.user.username && this.user.password) {
-          this.$store.dispatch('auth/login', this.user).then(
+                    this.$store.dispatch('auth/login', this.user).then(
             () => {
+            if(this.user.password == 'test'){
+             this.$router.push('/credentialReset');
+            }else{
               this.$router.push('/profile');
+            }
             },
             error => {
               this.loading = false;

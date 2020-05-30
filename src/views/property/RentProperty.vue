@@ -2,6 +2,7 @@
   <div class="container">
     
       {{propertyData.name}}
+      {{propertyData.description}}
       <h3>User Details</h3>
     <form @submit="rentProperty">
       <div class="form-group">
@@ -87,13 +88,16 @@ export default {
 
   methods: {
     rentProperty(e) {
+    
         e.preventDefault();
       this.loading = true;
+    
       PropService.rentProperty(
         this.propertyData.id,
         this.rent
       ).then(
         response => {
+       
             this.rent = response.data;
         },
         error => {}

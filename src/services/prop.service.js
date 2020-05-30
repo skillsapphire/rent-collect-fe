@@ -13,8 +13,8 @@ class PropService {
   getPropertyData(){
     return this.property;
   }
-  getAllProperties(userId) {
-    return axios.get(API_URL + 'property/'+userId, { headers: authHeader() });
+  getAllProperties(userId, pageNo, sortField, sortType) {
+    return axios.get(API_URL + 'property/'+userId+'?page='+pageNo+'&sortField='+sortField+'&sortType='+sortType, { headers: authHeader() });
   }
   getProperty(userId, propertyId) {
     return axios.get(API_URL + 'user/'+userId+ '/property/'+ propertyId, { headers: authHeader() });
@@ -30,16 +30,22 @@ class PropService {
     return axios.delete(API_URL + 'user/'+userId+ '/property/'+ propertyId, { headers: authHeader() });
   }
   rentProperty(propertyId,rent) {
-     
-      return axios.post(API_URL + 'rent/'+ propertyId, rent, { headers: authHeader() });
-  
-  }
+ 
+        return axios.post(API_URL + 'rent/'+ propertyId, rent, { headers: authHeader() });
+    }
 
   getRentDetail(userId) {
     return axios.get(API_URL + 'rent/'+ userId,{ headers: authHeader() });
 
 }
+passwordReset(userId, requestObj) {
+  return axios.put(API_URL + 'user/reset/'+userId, requestObj, { headers: authHeader() });
 
+}
+emailOwner(rentDetail) {
+  return axios.post(API_URL + 'rent/notifyOwner', rentDetail, { headers: authHeader() });
+
+}
 }
 
 export default new PropService();

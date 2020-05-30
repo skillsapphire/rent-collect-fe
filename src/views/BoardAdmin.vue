@@ -17,6 +17,9 @@ export default {
     };
   },
   mounted() {
+    if (!this.$store.state.auth.user) {
+      this.$router.push('/login');
+    }
     UserService.getAdminBoard().then(
       response => {
         this.content = response.data;
