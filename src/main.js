@@ -8,7 +8,6 @@ import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import vSelect from 'vue-select'
 import {
   faHome,
   faUser,
@@ -17,7 +16,6 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-Vue.component('v-select', vSelect)
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
