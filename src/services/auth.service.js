@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:9090/api/auth/';
+const API_URL = 'https://rentcollect.herokuapp.com/api/auth/';
 
 class AuthService {
   login(user) {

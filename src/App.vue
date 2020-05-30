@@ -1,8 +1,12 @@
 <template>
   <div id="app" >
-    <nav class="navbar navbar-expand navbar-light bg-light mb-2">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-2">
       <a href class="navbar-brand" @click.prevent>RentCollect</a>
-      <div class="navbar-nav mr-auto bg bg-warning ">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse bg bg-info" id="navbarSupportedContent">
+      <div class="navbar-nav mr-auto">
         <li class="nav-item text-success">
           <router-link to="/home" class="nav-link">
             <font-awesome-icon icon="home" />Home
@@ -58,6 +62,7 @@
             <font-awesome-icon icon="sign-out-alt" />LogOut
           </a>
         </li>
+      </div>
       </div>
     </nav>
 
